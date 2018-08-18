@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+
+<meta name="robots" content="noindex">
+
+<head>
+  <meta name="description" content="Big Boss Battle Game">
+  <title>Big Boss Battle Game</title>
+  <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.9.0/altspace.js"></script>
+  <script src="https://tweenjs.github.io/tween.js/src/Tween.js"></script>
+  <script src="https://cdn.rawgit.com/oOblik/AltspaceVR-Native-Components-JS/0.1.2/js/JSNativeComponents.js"></script>
+  <script src="bake-vertex-light.js"></script>
+</head>
+<body>
+
+  <a-scene altspace="fullspace: true" vr-mode-ui="enabled: false" light="defaultLightsEnabled: true" sync-system='app: bbb; author: ducky'>
+
+    <a-entity camera position="0 10 0" wasd-controls="fly: true" look-controls></a-entity>
+        <a-entity position="90 250 300">
+        <a-light id="bakelight" type="directional" intensity="4000" position="0 0 0" shadow="cast: true"></a-light>
+         <a-entity id="szd" geometry="primitive: sphere; buffer: false;" material="color: yellow; shader: flat"></a-entity>
+        </a-entity>
+
+    <!--a-assets>
+      <a-mixin id="flash" obj-model="obj:flash2.obj" material="color: black" collapse-model scale="1 1 1"></a-mixin>
+      <a-mixin id="flashhand" rotation="0 0 0" n-skeleton-parent="part: hand; side: right; index: 0" position="0 -0.5 -0.3" altspace-cursor-collider="enabled: false" sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id="light" obj-model="obj:light.obj" material="color: teal; opacity:0.1" collapse-model scale="1 1 1"></a-mixin>
+      <a-mixin id="lighthand" rotation="0 0 0" n-skeleton-parent="part: hand; side: right; index: 0" position="0 -0.5 -0.3" altspace-cursor-collider="enabled: false" sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id="tele" n-portal="targetEntity: #outhold" collapse-model scale="0.01 1 0.01"></a-mixin>
+      <a-mixin id="telehand" rotation="90 0 0" n-skeleton-parent="part: hand; side: right; index: 0" position="0 0.15 -4.3" altspace-cursor-collider="enabled: false" sync sync-n-skeleton-parent></a-mixin>
+    </a-assets>
+
+    <a-entity id="flashhandin" geometry="primitive: box" material="color:blue" position='25 5 25' rotation="0 0 0" scale="0.15 0.15 0.03" instantiator="on: click; group: fg; mixin: flash flashhand;" altspace-cursor-collider="enabled: true"></a-entity>
+    <a-entity id="lighthandin" geometry="primitive: box" material="color:green" position='25 5.25 25' rotation="0 0 0" scale="0.15 0.15 0.03" instantiator="on: click; group: lg; mixin: light lighthand;" altspace-cursor-collider="enabled: true"></a-entity>
+    <a-entity id="telehandin" geometry="primitive: box" material="color:green" position='25 5.25 25' rotation="0 0 0" scale="0.15 0.15 0.03" instantiator="on: click; group: tg; mixin: tele telehand;" altspace-cursor-collider="enabled: true"></a-entity-->
+
+    <a-entity id="tag" position="0 15 0" rotation="0 -90 0"></a-entity>
+    <a-entity id="play" position="0 1 0" rotation="0 -90 0"></a-entity>
+    <a-entity id="outhold" position="110 0 110" rotation="0 0 0"></a-entity>
+
+    <a-entity id="lobbytp" position="0 -5000 0" scale="1 1 1" n-portal="targetEntity: #tag" n-cockpit-parent></a-entity>
+    <a-entity id="playtp" position="0 -5000 0" scale="1 1 1" n-portal="targetEntity: #play" n-cockpit-parent></a-entity>
+
+   <a-entity id="console" position="0.8 -0.6 0" rotation="0 0 0" n-cockpit-parent>
+
+    <a-entity id="menu1" n-text="fontSize: 3; text:Big Boss Battle by Ducky V0.2 'Idkwth'" position='-0.81 0.16 -1.60' rotation="-25 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+
+    <a-entity geometry="primitive: box" material="color: black" position='-0.81 0.075 -1.595' rotation="-25 0 0" scale="0.9 0.25 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="blocker" geometry="primitive: box" material="src:block.jpg" position='-0.81 -5000.09 -1.5' rotation="-25 0 0" scale="0.8 0.25 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button1" geometry="primitive: box" material="color: #3d3d3d" position='-1.1 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button2" geometry="primitive: box" material="color: #3d3d3d" position='-0.91 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button3" geometry="primitive: box" material="color: red" position='-0.72 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button4" geometry="primitive: box" material="color: blue" position='-0.52 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <!--a-entity id="name" n-text="fontSize: 7; text:" position='-0.81 0.66 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+    <a-entity id="role" n-text="fontSize: 5; text:Pick a team or select Spectate" position='-0.81 0.57 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+    <a-entity id="redtext" n-text="fontSize: 3; text:Seekers: 0" position='-0.81 0.5 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+    <a-entity id="bluetext" n-text="fontSize: 3; text:Hiders: 0" position='-0.81 0.45 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+    <a-entity id="totaltext" n-text="fontSize: 3; text:Total Players: 0" position='-0.81 0.4 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+    <a-entity id="readytext" n-text="fontSize: 3; text:Ready to Play: 0" position='-0.81 0.35 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+    <a-entity id="guesttext" n-text="fontSize: 3; text:Spectating: 0" position='-0.81 0.3 -1.60' rotation="0 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity-->
+
+   </a-entity>
+
+
+   <a-entity id="modconsole" position="0.8 -5000.9 0.1" rotation="0 0 0" n-cockpit-parent>
+
+    <a-entity id="menu2" n-text="fontSize: 3; text:Mod Panel" position='-0.81 0.16 -1.60' rotation="-25 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+
+    <a-entity geometry="primitive: box" material="color: black" position='-0.81 0.075 -1.595' rotation="-25 0 0" scale="0.9 0.25 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button5" geometry="primitive: box" material="color: black" position='-1.1 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button6" geometry="primitive: box" material="color: black" position='-0.91 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button7" geometry="primitive: box" material="color: black" position='-0.72 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+    <a-entity id="button8" geometry="primitive: box" material="color: black" position='-0.52 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+   </a-entity>
+
+  
+    
+
+    <a-entity id="bosshpbox1" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 -4.5"></a-entity>
+    <a-entity id="bosshpbox2" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 -3.5"></a-entity>
+    <a-entity id="bosshpbox3" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 -2.5"></a-entity>
+    <a-entity id="bosshpbox4" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 -1.5"></a-entity>
+    <a-entity id="bosshpbox5" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 -0.5"></a-entity>
+    <a-entity id="bosshpbox6" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 0.5"></a-entity>
+    <a-entity id="bosshpbox7" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 1.5"></a-entity>
+    <a-entity id="bosshpbox8" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 2.5"></a-entity>
+    <a-entity id="bosshpbox9" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 3.5"></a-entity>
+    <a-entity id="bosshpbox10" scale="1 1 1" geometry="primitive: box" material="color: red" position="90 60 4.5"></a-entity>
+
+
+    <a-box id="bosshptracker" scale="0.1 0.1 0.1" position="5000 1100 5000" sync="own-on: up" sync-transform></a-box>
+    <a-box id="gamestate" scale="0.1 0.1 0.1" position="5000 0 5000" sync="own-on: up" sync-transform></a-box>
+    <a-box id="attack1box" scale="0.1 0.1 0.1" position="5000 0 5000" sync="own-on: up" sync-transform></a-box>
+    <a-box id="attack2box" scale="0.1 0.1 0.1" position="5000 0 5000" sync="own-on: up" sync-transform></a-box>
+    <a-box id="attack3box" scale="0.1 0.1 0.1" position="5000 0 5000" sync="own-on: up" sync-transform></a-box>
+    <a-box id="attack4box" scale="0.1 0.1 0.1" position="5000 0 5000" sync="own-on: up" sync-transform></a-box>
+    <a-box id="phasebox" scale="0.1 0.1 0.1" position="5000 0 5000" sync="own-on: up" sync-transform></a-box>
+
+    <a-entity id="base" obj-model="obj:bbb2.obj" geometry="buffer: false" material="src: usd.jpg; repeat: 20 20" scale="3 3 3" position=" 0 0 0" n-mesh-collider="type: environment; convex: false" bake-vertex-light></a-entity>
+
+    <a-entity id="ring1" obj-model="obj:bbb3.obj" geometry="buffer: false" material="color: #1a172e" scale="3 3 3" position=" 0 10 0" n-mesh-collider="type: environment; convex: false" bake-vertex-light></a-entity>
+
+    <a-entity id="ring2" obj-model="obj:bbb3.obj" geometry="buffer: false" material="color: #1a172e" scale="3 3 3" position=" 0 20 0" n-mesh-collider="type: environment; convex: false" bake-vertex-light></a-entity>
+
+    <a-entity id="ring3" obj-model="obj:bbb3.obj" geometry="buffer: false" material="color: #1a172e" scale="3 3 3" position=" 0 30 0" n-mesh-collider="type: environment; convex: false" bake-vertex-light></a-entity>
+
+    <a-entity id="ring4" obj-model="obj:bbb3.obj" geometry="buffer: false" material="color: #1a172e" scale="3 3 3" position=" 0 40 0" n-mesh-collider="type: environment; convex: false" bake-vertex-light></a-entity>
+
+    <a-entity id="bossgroup" position="0 -100 0">
+    <a-entity id="bosshead" obj-model="obj:bosshead.obj;mtl:boss.mtl" geometry="buffer: false" scale="20 20 20" position="90 45 0" rotation="10 -90 0" bake-vertex-light altspace-cursor-collider="enabled: false">
+      <a-box scale="0.3 0.3 0.3" color="blue"></a-box>
+      <a-entity id="bossheadbox" n-box-collider="isTrigger:true; type:environment; size: 0.3 0.3 0.3" n-container="capacity:1"></a-entity>
+      <a-animation begin="go1" attribute="rotation" delay="0" dur="5000" direction="alternate" easing="linear" to="10 270 0"></a-animation>
+    </a-entity>
+    <a-entity id="bossbody" obj-model="obj:bossbody.obj;mtl:boss.mtl" geometry="buffer: false" scale="20 20 20" position="90 10 0" rotation="0 -90 0" bake-vertex-light altspace-cursor-collider="enabled: false"> 
+      <!--a-box scale="1 1.5 1" color="blue"></a-box-->
+    <a-entity  id="bossbodybox" n-box-collider="isTrigger:true; type:environment; size: 1 1.5 1" n-container="capacity:1"></a-entity>
+    </a-entity>
+    <a-animation begin="go2" attribute="position" delay="0" dur="15000" direction="forward" easing="linear" to="0 0 0"></a-animation>   
+    </a-entity>
+    
+    <a-entity id="robotgroup1" position="90 -1000 0" rotation="0 0 0">
+    <a-entity id="robot1" obj-model="obj:rc.obj;mtl:rc.mtl" geometry="buffer: false" scale="500 500 500" position="0 0 0" rotation="-90 90 180" bake-vertex-light>
+      <a-animation begin="gorb1a" attribute="position" delay="0" dur="7501" direction="forward" fill="forward" easing="linear" to="90 0 0"></a-animation>
+      <a-animation begin="gorb1b" attribute="rotation" delay="0" dur="15100" direction="forward" fill="forward" easing="linear" to="0 15000 0"></a-animation>
+      <a-animation begin="gorb1c" attribute="position" delay="0" dur="7501" direction="forward" fill="forward" easing="linear" to="0 0 0"></a-animation>
+      <a-entity id="rbs1" position="0 0 0" n-sound="src: rbs.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    </a-entity>
+    <a-entity id="robot2" obj-model="obj:rc.obj;mtl:rc.mtl" geometry="buffer: false" scale="500 500 500" position="0 0 0" rotation="-90 90 180" bake-vertex-light>
+      <a-animation begin="gorb2a" attribute="position" delay="0" dur="7501" direction="forward" fill="forward" easing="linear" to="-90 0 0"></a-animation>
+      <a-animation begin="gorb2b" attribute="rotation" delay="0" dur="15100" direction="forward" fill="forward" easing="linear" to="0 15000 0"></a-animation>
+      <a-animation begin="gorb2c" attribute="position" delay="0" dur="7501" direction="forward" fill="forward" easing="linear" to="0 0 0"></a-animation>
+      <a-entity id="rbs2" position="0 0 0" n-sound="src: rbs.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    </a-entity>
+    <a-animation begin="gorg1a" attribute="rotation" delay="0" dur="15100" direction="forward" fill="forward" easing="linear" to="0 1440 0"></a-animation> 
+    </a-entity>   
+
+
+
+
+    <a-entity id="robot1" obj-model="obj:rc.obj;mtl:rc.mtl" geometry="buffer: false" scale="200 200 200" position="-90 10 0" rotation="-90 90 180" bake-vertex-light></a-entity>
+  
+    <a-entity id="b1s" position="0 0 0" n-sound="src: b1.wav; volume: 0.2; on: b1; minDistance: 1000; maxDistance: 3000" n-skeleton-parent="part: spine;"></a-entity>
+
+    <a-entity id="ls" position="0 0 0" n-sound="src: light.wav; volume: 0.05; on: b1; minDistance: 1000; maxDistance: 3000" n-skeleton-parent="part: spine;"></a-entity>
+
+    <a-entity id="ha1" position="90 45 0" n-sound="src: ha1.wav; volume: 0.2; on: b1; minDistance: 1000; maxDistance: 3000"></a-entity>
+    <a-entity id="ha2" position="90 45 0" n-sound="src: ha2.wav; volume: 0.2; on: b1; minDistance: 1000; maxDistance: 3000"></a-entity>
+    <a-entity id="ha3" position="90 45 0" n-sound="src: ha3.wav; volume: 0.2; on: b1; minDistance: 1000; maxDistance: 3000"></a-entity>
+    <a-entity id="hit" position="90 45 0" n-sound="src: hit.wav; volume: 0.3; on: b1; minDistance: 1000; maxDistance: 3000"></a-entity>
+    <a-entity id="shorthit" position="0 25 0" n-sound="src: shorthit.wav; volume: 0.3; on: b1; minDistance: 1000; maxDistance: 3000"></a-entity>
+
+    <a-entity id="song" position="0 10 0" n-sound="src: arktheme.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="song2" position="0 10 0" n-sound="src: arkpregame.wav; loop: true; autoplay: true; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="song3" position="0 10 0" n-sound="src: arktheme2.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="song4" position="0 10 0" n-sound="src: arktheme3.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="song5" position="0 10 0" n-sound="src: arktheme4.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="song6" position="0 10 0" n-sound="src: level5.wav; loop: false; autoplay: false; volume: 0.13; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="song7" position="0 10 0" n-sound="src: game2.wav; loop: true; autoplay: false; volume: 0.15; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+
+    <a-entity id="sf1" position="90 45 0" n-sound="src: sf1.wav; loop: false; autoplay: false; volume: 0.3; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="sf3" position="90 45 0" n-sound="src: sf3.wav; loop: false; autoplay: false; volume: 0.3; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="sf4" position="90 45 0" n-sound="src: sf4.wav; loop: true; autoplay: false; volume: 0.3; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="sf5" position="90 45 0" n-sound="src: sf5.wav; loop: false; autoplay: false; volume: 0.3; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+    <a-entity id="sf6" position="90 45 0" n-sound="src: sf6.wav; loop: false; autoplay: false; volume: 0.3; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
+
+    <a-sphere id="sk2y" material="src:sky1.jpg; repeat: 25 25" scale="-900 900 900"></a-sphere>
+    <a-sphere id="sky" color="black" scale="-920 920 920"></a-sphere>
+    <!--a-entity id="players" position="0 5 0" scale="5 5 5" n-text="text: 0;" n-billboard></a-entity-->
+    <!--a-entity id="bosshpshow" position="20 4 10" scale="1 1 1" n-text="Boss HP: 0;" n-billboard></a-entity-->
+
+    <a-entity id="lattack1" geometry="primitive: sphere" material="color: white; opacity: 0.6" position='0 1000 0' rotation="0 0 0" scale="0.1 .01 .01" altspace-cursor-collider="enabled: false">
+    <a-animation begin="go1" attribute="scale" delay="0" dur="4000" direction="forwards" fill="backwards" easing="linear" to="2 2000 2"></a-animation>  
+    </a-entity>
+    <a-entity id="lattack2" geometry="primitive: sphere" material="color: white; opacity: 0.6" position='0 1000 0' rotation="0 0 0" scale="0.1 .01 .01" altspace-cursor-collider="enabled: false">
+    <a-animation begin="go1" attribute="scale" delay="0" dur="4000" direction="forwards" fill="backwards" easing="linear" to="2 2000 2"></a-animation>  
+    </a-entity>
+    <a-entity id="lattack3" geometry="primitive: sphere" material="color: white; opacity: 0.6" position='0 1000 0' rotation="0 0 0" scale="0.1 .01 .01" altspace-cursor-collider="enabled: false">
+    <a-animation begin="go1" attribute="scale" delay="0" dur="4000" direction="forwards" fill="backwards" easing="linear" to="2 2000 2"></a-animation>
+    </a-entity>
+    <a-entity id="lattack4" geometry="primitive: sphere" material="color: white; opacity: 0.6" position='0 1000 0' rotation="0 0 0" scale="0.1 .01 .01" altspace-cursor-collider="enabled: false">
+    <a-animation begin="go1" attribute="scale" delay="0" dur="4000" direction="forwards" fill="backwards" easing="linear" to="2 2000 2"></a-animation>
+    </a-entity>
+    <a-entity id="lattack5" geometry="primitive: sphere" material="color: white; opacity: 0.6" position='0 1000 0' rotation="0 0 0" scale="0.1 .01 .01" altspace-cursor-collider="enabled: false">
+    <a-animation begin="go1" attribute="scale" delay="0" dur="4000" direction="forwards" fill="backwards" easing="linear" to="2 2000 2"></a-animation>
+    </a-entity>
+
+
+
+  </a-scene>
+
+  <script>
+
+    var songplay = 0;
+    var rand = 0;
+    var gamestart = false;
+    var attack1start = false;
+    var bosshp = document.querySelector('#bosshptracker').getAttribute('position').y;
+    gamestateupdate = 0;
+    attack1stateupdate = 0;
+    attack2stateupdate = 0;
+    console.log(gamestateupdate);
+    var headx = 0;
+    var heady = 0;
+    var headz = 0;
+    var phaser = Array(1,2,3);
+    var phaseval = 0;
+    var phaseset = 0;
+
+    
+
+    altspace.getUser().then(function(user){
+          //document.querySelector('#name').setAttribute('n-text', {text: user.displayName });
+          });
+    altspace.getUser().then(function(user){
+        if (user.isModerator){
+          document.querySelector('#modconsole').setAttribute('position', '0.8 -0.9 0.1');
+          }
+          });
+
+    document.querySelector('#button1').addEventListener('mousedown', function() {
+          document.querySelector('#b1s').components['n-sound'].playSound();
+          document.querySelector("#gamestate").emit("up");
+          document.querySelector('#gamestate').setAttribute('position', {x: 5000, y: 1, z: 5000});
+          });
+    document.querySelector('#button2').addEventListener('mousedown', function() {
+          document.querySelector('#b1s').components['n-sound'].playSound();
+          //document.querySelector("#attack1box").emit("up");
+          //document.querySelector('#attack1box').setAttribute('position', {x: 5000, y: 1, z: 5000});
+          });
+    document.querySelector('#button3').addEventListener('mousedown', function() {
+          document.querySelector('#b1s').components['n-sound'].playSound();
+          //document.querySelector("#attack2box").emit("up");
+          //document.querySelector('#attack2box').setAttribute('position', {x: 5000, y: 1, z: 5000});
+          });
+    document.querySelector('#button4').addEventListener('mousedown', function() {
+          document.querySelector('#b1s').components['n-sound'].playSound();
+          });
+    document.querySelector('#button5').addEventListener('mousedown', function() {
+          document.querySelector('#b1s').components['n-sound'].playSound();
+          });
+    document.querySelector('#button6').addEventListener('mousedown', function() {
+          document.querySelector('#b1s').components['n-sound'].playSound();
+          });
+        
+    rings();
+    function rings() {              
+        
+        setTimeout(function() {
+          document.querySelector('#ring1').setAttribute('material', 'color', '#a63737');
+         // console.log("ring1");
+          }, 300);
+        setTimeout(function() {
+          document.querySelector('#ring1').setAttribute('material', 'color', '#1a172e');
+          document.querySelector('#ring2').setAttribute('material', 'color', '#a63737');
+         // console.log("ring2");
+          }, 600);
+        setTimeout(function() {
+          document.querySelector('#ring2').setAttribute('material', 'color', '#1a172e');
+          document.querySelector('#ring3').setAttribute('material', 'color', '#a63737');
+         // console.log("ring3");
+          }, 900);
+        setTimeout(function() {
+          document.querySelector('#ring3').setAttribute('material', 'color', '#1a172e');
+          document.querySelector('#ring4').setAttribute('material', 'color', '#a63737');
+          //console.log("ring4");
+          }, 1200);
+        setTimeout(function() {
+          document.querySelector('#ring4').setAttribute('material', 'color', '#1a172e');
+          //console.log("endrings");
+          }, 1500);
+        };
+        setInterval(rings, 3000);
+
+    document.querySelector('#bossheadbox').addEventListener('container-count-changed', function(e){
+          document.querySelector("#bosshptracker").emit("up");
+          document.querySelector('#bosshptracker').setAttribute('position', {x: 5000, y: bosshp -50, z: 5000});
+          document.querySelector('#hit').components['n-sound'].playSound();          
+          document.querySelector('#ring1').setAttribute('material', 'color', '#a63737');
+          setTimeout(function() {document.querySelector('#ring1').setAttribute('material', 'color', '#1a172e'); }, 25);
+          document.querySelector('#ring2').setAttribute('material', 'color', '#a63737');
+          setTimeout(function() {document.querySelector('#ring2').setAttribute('material', 'color', '#1a172e'); }, 25); 
+          document.querySelector('#ring3').setAttribute('material', 'color', '#a63737');
+          setTimeout(function() {document.querySelector('#ring3').setAttribute('material', 'color', '#1a172e'); }, 25); 
+          document.querySelector('#ring4').setAttribute('material', 'color', '#a63737');
+          setTimeout(function() {document.querySelector('#ring4').setAttribute('material', 'color', '#1a172e'); }, 25);   
+         });
+    document.querySelector('#bossbodybox').addEventListener('container-count-changed', function(e){
+          document.querySelector("#bosshptracker").emit("up");
+          document.querySelector('#bosshptracker').setAttribute('position', {x: 5000, y: bosshp -25, z: 5000});
+          document.querySelector('#hit').components['n-sound'].playSound();
+          document.querySelector('#ring1').setAttribute('material', 'color', 'red');
+          setTimeout(function() {document.querySelector('#ring1').setAttribute('material', 'color', '#1a172e'); }, 25);
+          document.querySelector('#ring2').setAttribute('material', 'color', 'red');
+          setTimeout(function() {document.querySelector('#ring2').setAttribute('material', 'color', '#1a172e'); }, 25); 
+          document.querySelector('#ring3').setAttribute('material', 'color', 'red');
+          setTimeout(function() {document.querySelector('#ring3').setAttribute('material', 'color', '#1a172e'); }, 25); 
+          document.querySelector('#ring4').setAttribute('material', 'color', 'red');
+          setTimeout(function() {document.querySelector('#ring4').setAttribute('material', 'color', '#1a172e'); }, 25); 
+         });
+
+    skyl();
+    function skyl() {              
+        
+        setTimeout(function() {
+          document.querySelector('#sky').setAttribute('scale', {x: -880, y: 880, z: 800});
+          document.querySelector('#sky').setAttribute('material', 'color', '#020675');
+          console.log("Lighting");
+          }, 10);
+        setTimeout(function() {
+          document.querySelector('#sky').setAttribute('scale', {x: -920, y: 920, z: 920});
+          document.querySelector('#sky').setAttribute('material', 'color', 'black');
+          }, 60);
+        setTimeout(function() {
+          document.querySelector('#sky').setAttribute('scale', {x: -880, y: 880, z: 800});
+          document.querySelector('#sky').setAttribute('material', 'color', '#060b99');
+          }, 300);
+        setTimeout(function() {
+          document.querySelector('#sky').setAttribute('material', 'color', '#a3a6ff');
+          }, 380);
+        setTimeout(function() {
+          document.querySelector('#sky').setAttribute('scale', {x: -920, y: 920, z: 920});
+          document.querySelector('#sky').setAttribute('material', 'color', 'black');
+          document.querySelector('#ls').components['n-sound'].playSound();
+          }, 450);
+        rand = (Math.random() * 60000) + 5000;
+        };
+        setInterval(skyl, 23000);
+
+     
+    function startgame() {              
+        if (gamestart == false) {
+          gamestart = true;
+          document.querySelector("#bossgroup").emit("go2");
+          setTimeout(function() {document.querySelector('#song2').components['n-sound'].pauseSound(); }, 1000);
+          setTimeout(function() {document.querySelector('#song6').components['n-sound'].playSound(); }, 1150);
+          setTimeout(function() {document.querySelector('#ha1').components['n-sound'].playSound(); }, 12000);
+          setTimeout(function() {document.querySelector('#ha2').components['n-sound'].playSound(); }, 8000);
+          setTimeout(function() {document.querySelector('#ha3').components['n-sound'].playSound(); }, 1000);
+          setTimeout(function() {document.querySelector('#ha1').components['n-sound'].playSound(); }, 10000);
+          setTimeout(function() {document.querySelector('#ha2').components['n-sound'].playSound(); }, 13000);
+          setTimeout(function() {bossaction1(); }, 10000);
+        };
+        };
+
+    function next() {              
+        if (gamestart == true) {
+        phaseval = phaser[Math.floor(Math.random()*phaser.length)];
+        document.querySelector("#phasebox").emit("up");
+        document.querySelector('#phasebox').setAttribute('position', {x: 5000, y: phaseval, z: 5000});
+        setTimeout(function() {
+        phaseset = document.querySelector('#phasebox').getAttribute('position').y;
+        if (phaseset == 1) {
+          attackphase1();
+         } else if (phaseset == 2){
+          attackphase2();
+         } else if (phaseset == 3){
+          bossaction1();
+        };
+        }, 1000);
+        };
+        };
+
+    function attackphase1() {              
+        if (gamestart == true) {
+          setTimeout(function() {document.querySelector("#attack1box").emit("up"); }, 245);
+          setTimeout(function() {document.querySelector('#attack1box').setAttribute('position', {x: 5000, y: 0, z: 5000}); }, 250);
+          skyl();
+          setTimeout(function() {document.querySelector('#lattack1').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack1").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 50);
+          setTimeout(function() {document.querySelector('#lattack2').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack2").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 1000);
+          setTimeout(function() {document.querySelector('#lattack3').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack3").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 2000);
+          
+          setTimeout(function() {document.querySelector('#lattack4').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack4").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 3000);
+          setTimeout(function() {document.querySelector('#lattack5').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack5").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 4000);
+          setTimeout(function() {skyl(); }, 4000);
+          setTimeout(function() {document.querySelector('#ha2').components['n-sound'].playSound(); }, 4000);
+          
+
+          setTimeout(function() {document.querySelector('#lattack1').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack1").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 5000);
+          setTimeout(function() {document.querySelector('#lattack2').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack2").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 6000);
+          setTimeout(function() {document.querySelector('#lattack3').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack3").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 7000);
+          
+          setTimeout(function() {document.querySelector('#lattack4').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack4").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 8000);
+          setTimeout(function() {document.querySelector('#lattack5').setAttribute('position', {x: headx, y: 1000, z: headz});
+          document.querySelector("#lattack5").emit("go1");
+          setTimeout(function() {document.querySelector('#shorthit').components['n-sound'].playSound(); }, 2000); }, 9000);
+          setTimeout(function() {skyl(); }, 8000);
+          setTimeout(function() {next(); }, 9000);
+          };
+          };
+    function attackphase2() {              
+        if (gamestart == true) {
+          setTimeout(function() {document.querySelector("#attack2box").emit("up"); }, 245);
+          setTimeout(function() {document.querySelector('#attack2box').setAttribute('position', {x: 5000, y: 0, z: 5000}); }, 250);
+          document.querySelector('#rbs1').components['n-sound'].playSound();
+          document.querySelector('#rbs2').components['n-sound'].playSound();
+          document.querySelector('#robotgroup1').setAttribute('position', {x: 90, y: 0.5, z: 0});
+          document.querySelector("#robotgroup1").emit("gorg1a");
+          document.querySelector("#robot1").emit("gorb1a");
+          document.querySelector("#robot2").emit("gorb2a");
+          document.querySelector("#robot1").emit("gorb1b");
+          document.querySelector("#robot2").emit("gorb2b");
+          setTimeout(function() {document.querySelector("#robot1").emit("gorb1c"); }, 7500);
+          setTimeout(function() {document.querySelector("#robot2").emit("gorb2c"); }, 7500);
+          setTimeout(function() {document.querySelector('#rbs1').components['n-sound'].pauseSound(); }, 15000);
+          setTimeout(function() {document.querySelector('#rbs2').components['n-sound'].pauseSound(); }, 15000);
+          setTimeout(function() {document.querySelector('#robotgroup1').setAttribute('position', {x: 90, y: -1000, z: 0}); }, 15000);
+          setTimeout(function() {next(); }, 15500);
+          };
+          };
+
+   
+    function bossaction1() {              
+        
+        setTimeout(function() {
+          document.querySelector("#bosshead").emit("go1");
+          document.querySelector('#sf5').components['n-sound'].playSound();
+          }, 10);
+        setTimeout(function() {
+          document.querySelector('#sf4').components['n-sound'].playSound();
+          }, 500);
+        setTimeout(function() {
+          document.querySelector('#sf4').components['n-sound'].pauseSound();
+          document.querySelector('#sf6').components['n-sound'].playSound();
+          }, 4500);
+        setTimeout(function() {
+          document.querySelector('#ha3').components['n-sound'].playSound();
+          }, 4900);
+        setTimeout(function() {next(); }, 5000);
+        //rand = (Math.random() * 45000) + 5000;
+        };
+
+         loop();
+    function loop() {
+      bosshp = document.querySelector('#bosshptracker').getAttribute('position').y;
+      if (bosshp < 1000){document.querySelector('#bosshpbox10').setAttribute('material', 'color', 'white');} else if (bosshp > 1000){document.querySelector('#bosshpbox10').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 900){document.querySelector('#bosshpbox9').setAttribute('material', 'color', 'white');} else if (bosshp > 900){document.querySelector('#bosshpbox9').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 800){document.querySelector('#bosshpbox8').setAttribute('material', 'color', 'white');} else if (bosshp > 800){document.querySelector('#bosshpbox8').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 700){document.querySelector('#bosshpbox7').setAttribute('material', 'color', 'white');} else if (bosshp > 700){document.querySelector('#bosshpbox7').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 600){document.querySelector('#bosshpbox6').setAttribute('material', 'color', 'white');} else if (bosshp > 600){document.querySelector('#bosshpbox6').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 500){document.querySelector('#bosshpbox5').setAttribute('material', 'color', 'white');} else if (bosshp > 500){document.querySelector('#bosshpbox5').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 400){document.querySelector('#bosshpbox4').setAttribute('material', 'color', 'white');} else if (bosshp > 400){document.querySelector('#bosshpbox4').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 300){document.querySelector('#bosshpbox3').setAttribute('material', 'color', 'white');} else if (bosshp > 300){document.querySelector('#bosshpbox3').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 200){document.querySelector('#bosshpbox2').setAttribute('material', 'color', 'white');} else if (bosshp > 200){document.querySelector('#bosshpbox2').setAttribute('material', 'color', '#a63737');};
+      if (bosshp < 100){document.querySelector('#bosshpbox1').setAttribute('material', 'color', 'white');} else if (bosshp > 100){document.querySelector('#bosshpbox1').setAttribute('material', 'color', '#a63737');};
+      gamestateupdate = document.querySelector('#gamestate').getAttribute('position').y;
+      attack1stateupdate = document.querySelector('#attack1box').getAttribute('position').y;
+      attack2stateupdate = document.querySelector('#attack2box').getAttribute('position').y;
+      if (gamestateupdate >= 1 && gamestart == false){       
+         startgame();
+        };
+      if (attack1stateupdate >= 1 && gamestart == true){       
+         attackphase1();
+        };
+      if (attack2stateupdate >= 1 && gamestart == true){       
+         attackphase2();
+        };
+        //console.log(gamestateupdate);
+        console.log(attack2stateupdate);
+        };
+        setInterval(loop, 500);
+
+      altspace.getThreeJSTrackingSkeleton().then(function(skeleton){
+        var head = skeleton.getJoint('Head');
+        
+      
+        function track() {
+          headz = head.position.z;
+          headx = head.position.x;
+          heady = head.position.y;
+          } 
+        setInterval(track, 150);    
+        });
+
+         hpgain();
+    function hpgain() {
+      if (bosshp < 1050){
+        document.querySelector("#bosshptracker").emit("up");
+        document.querySelector('#bosshptracker').setAttribute('position', {x: 5000, y: bosshp + 4, z: 5000});
+        };
+        };
+        setInterval(hpgain, 500);
+
+
+   // hpshow();
+    //function hpshow() {
+       // document.querySelector('#bosshpshow').setAttribute('n-text', {text: bosshp});
+        //};
+        //setInterval(hpshow, 50);
+
+  </script>
+
+
+
+
